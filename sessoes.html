@@ -5,25 +5,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mega Filmes HD - Sessões Disponíveis</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/styles.css">
 </head>
 
-<body data-bs-theme="dark" class="bg-dark">
-
-  <nav class="navbar bg-black navbar-expand-lg border-bottom border-secondary">
+<body data-bs-theme="dark">
+  <nav class="navbar navbar-expand-lg border-bottom">
     <div class="container">
-      <a class="navbar-brand fw-bold fs-4 text-warning" href="index.html">Mega Filmes HD</a>
+      <a class="navbar-brand" href="index.html">
+        <img src="./img/iconCine.svg" alt="" class="d-inline-block align-text-top me-1">
+        Mega Filmes HD
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a href="index.html" class="nav-link text-warning">Home</a></li>
-          <li class="nav-item"><a href="cadastro-filmes.html" class="nav-link text-warning">Filmes</a></li>
-          <li class="nav-item"><a href="cadastro-salas.html" class="nav-link text-warning">Salas</a></li>
-          <li class="nav-item"><a href="cadastro-sessoes.html" class="nav-link text-warning">Sessões</a></li>
-          <li class="nav-item"><a href="venda-ingressos.html" class="nav-link text-warning">Ingressos</a></li>
-          <li class="nav-item"><a href="sessoes.html" class="nav-link text-warning active">Sessões Disponíveis</a></li>
+          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="cadastro-filmes.html" class="nav-link">Filmes</a></li>
+          <li class="nav-item"><a href="cadastro-salas.html" class="nav-link">Salas</a></li>
+          <li class="nav-item"><a href="cadastro-sessoes.html" class="nav-link">Sessões</a></li>
+          <li class="nav-item"><a href="venda-ingressos.html" class="nav-link">Ingressos</a></li>
+          <li class="nav-item"><a href="sessoes.html" class="nav-link active">Sessões Disponíveis</a></li>
         </ul>
       </div>
     </div>
@@ -35,49 +38,15 @@
 
   <div class="container mt-4" id="containerSessoes"></div>
 
-  <footer class="mt-5 py-4 border-top border-secondary">
+  <footer class="mt-5 py-4 border-top">
     <div class="container text-center">
-      <p class="text-secondary small mb-0">&copy; 2026 Mega Filmes HD Cinema</p>
+      <p class="text-secondary small mb-0">&copy; 2026 Mega Filmes HD</p>
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    function renderSessoes() {
-      const sessoes = JSON.parse(localStorage.getItem('sessoes') || '[]');
-      const el = document.getElementById('containerSessoes');
-
-      if (!sessoes.length) {
-        el.innerHTML = '<p class="text-secondary">Nenhuma sessão disponível no momento.</p>';
-        return;
-      }
-
-      el.innerHTML = `
-                <table class="table table-dark table-striped table-hover align-middle">
-                    <thead><tr>
-                        <th>Filme</th><th>Sala</th><th>Data e Hora</th><th>Idioma</th><th>Formato</th><th>Preço</th><th></th>
-                    </tr></thead>
-                    <tbody>
-                        ${sessoes.map(s => `
-                            <tr>
-                                <td>${s.filmeTitulo}</td>
-                                <td>${s.salaNome}</td>
-                                <td>${s.dataHora.replace('T', ' ')}</td>
-                                <td>${s.idioma}</td>
-                                <td>${s.formato}</td>
-                                <td>R$ ${parseFloat(s.preco).toFixed(2)}</td>
-                                <td>
-                                    <a href="venda-ingressos.html?sessao=${s.id}" class="btn btn-sm btn-warning">
-                                        Comprar Ingresso
-                                    </a>
-                                </td>
-                            </tr>`).join('')}
-                    </tbody>
-                </table>`;
-    }
-
-    renderSessoes();
-  </script>
+  <script src="./js/bootstrap.bundle.min.js"></script>
+  <script src="./js/Script.js"></script>
+  <script>renderSessoesDisponiveis();</script>
 </body>
 
 </html>

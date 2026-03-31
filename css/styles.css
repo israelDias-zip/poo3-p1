@@ -1,0 +1,123 @@
+:root {
+  --green-dark: #1a3a1a;
+  --green-mid: #2d6a2d;
+  --green-accent: #48752C;
+  --green-light: #5a9e3a;
+  --green-btn: #3a7d2a;
+  --green-btn-hover: #2d6020;
+}
+
+body {
+  background-color: #0d1a0d !important;
+}
+
+.navbar {
+  background-color: #0a100a !important;
+  border-bottom-color: var(--green-mid) !important;
+}
+
+.navbar-brand {
+  color: var(--green-light) !important;
+}
+
+.nav-link {
+  color: var(--green-light) !important;
+}
+
+.nav-link:hover {
+  color: #8fce6a !important;
+}
+
+.nav-link.active {
+  color: #b0e080 !important;
+  font-weight: 600;
+}
+
+.badge.text-bg-warning,
+.btn-warning {
+  background-color: var(--green-btn) !important;
+  border-color: var(--green-btn) !important;
+  color: #e8f5e2 !important;
+}
+
+.btn-warning:hover {
+  background-color: var(--green-btn-hover) !important;
+  border-color: var(--green-btn-hover) !important;
+}
+
+.btn-sm.btn-warning {
+  background-color: var(--green-accent) !important;
+  border-color: var(--green-accent) !important;
+  color: #fff !important;
+}
+
+.card {
+  background-color: var(--green-dark) !important;
+  border-color: var(--green-mid) !important;
+}
+
+.card-title {
+  color: #b0e080;
+}
+
+hr.border-secondary {
+  border-color: var(--green-mid) !important;
+}
+
+footer {
+  border-top-color: var(--green-mid) !important;
+}
+
+.form-control,
+.form-select {
+  background-color: #142014;
+  border-color: var(--green-mid);
+  color: #d4edda;
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: #1a2e1a;
+  border-color: var(--green-light);
+  color: #e8f5e2;
+  box-shadow: 0 0 0 0.2rem rgba(90, 158, 58, 0.25);
+}
+
+.form-control::placeholder {
+  color: #6a8a6a;
+}
+
+.form-label {
+  color: #a0c878;
+}
+
+.table-dark {
+  --bs-table-bg: #142014;
+  --bs-table-striped-bg: #1a2e1a;
+  --bs-table-hover-bg: #1f381f;
+  --bs-table-border-color: var(--green-mid);
+}
+
+.sessao-card {
+  background-color: var(--green-dark);
+  border: 1px solid var(--green-mid);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sessao-card h5 {
+  color: #b0e080;
+  margin-bottom: 0.5rem;
+}
+
+.sessao-card .info {
+  color: #7ab87a;
+  font-size: 0.9rem;
+}
+
+.sessao-card .preco {
+  color: #8fce6a;
+  font-weight: 600;
+  font-size: 1.1rem;
+}

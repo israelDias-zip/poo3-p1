@@ -6,13 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mega Filmes HD</title>
   <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/styles.css">
 </head>
 
-<body data-bs-theme="dark" class="bg-dark">
-  <nav class="navbar bg-black navbar-expand-lg border-bottom border-secondary">
+<body data-bs-theme="dark">
+  <nav class="navbar navbar-expand-lg border-bottom">
     <div class="container">
-      <a class="navbar-brand" href="">
-        <img src="./img/iconCine.svg" alt="" class="d-inline-block align-text-top">
+      <a class="navbar-brand" href="index.html">
+        <img src="./img/iconCine.svg" alt="" class="d-inline-block align-text-top me-1">
         Mega Filmes HD
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
@@ -20,35 +21,28 @@
       </button>
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a href="index.html" class="nav-link text-warning">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="cadastro-filmes.html" class="nav-link text-warning">Filmes</a>
-          </li>
-          <li class="nav-item">
-            <a href="cadastro-salas.html" class="nav-link text-warning">Salas</a>
-          </li>
-          <li class="nav-item">
-            <a href="cadastro-sessoes.html" class="nav-link text-warning">Sessões</a>
-          </li>
-          <li class="nav-item">
-            <a href="venda-ingressos.html" class="nav-link text-warning">Ingressos</a>
-          </li>
-          <li class="nav-item">
-            <a href="sessoes.html" class="nav-link text-warning">Sessões Disponíveis</a>
-          </li>
+          <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
+          <li class="nav-item"><a href="cadastro-filmes.html" class="nav-link">Filmes</a></li>
+          <li class="nav-item"><a href="cadastro-salas.html" class="nav-link">Salas</a></li>
+          <li class="nav-item"><a href="cadastro-sessoes.html" class="nav-link">Sessões</a></li>
+          <li class="nav-item"><a href="venda-ingressos.html" class="nav-link">Ingressos</a></li>
+          <li class="nav-item"><a href="sessoes.html" class="nav-link">Sessões Disponíveis</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
   <div class="container mt-4">
-    <h1><span class="badge text-bg-warning">Central de Operação</span></h1>
+    <h1><span class="badge text-bg-warning">Sessões em Cartaz</span></h1>
   </div>
 
-  <div class="container mt-4">
-    <div class="row gy-4">
+  <div class="container mt-3" id="sessoesEmCartaz">
+    <p class="text-secondary">Carregando sessões...</p>
+  </div>
+
+  <div class="container mt-5">
+    <h5 class="mb-3" style="color:#a0c878">Central de Operação</h5>
+    <div class="row gy-3">
       <div class="col-md-4">
         <div class="card h-100">
           <div class="card-body d-flex flex-column">
@@ -97,13 +91,15 @@
     </div>
   </div>
 
-  <footer class="mt-5 py-4 border-top border-secondary">
+  <footer class="mt-5 py-4 border-top">
     <div class="container text-center">
       <p class="text-secondary small mb-0">&copy; 2026 Mega Filmes HD</p>
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./js/bootstrap.bundle.min.js"></script>
+  <script src="./js/Script.js"></script>
+  <script>renderSessoesIndex();</script>
 </body>
 
 </html>
