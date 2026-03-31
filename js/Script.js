@@ -20,6 +20,8 @@ function mascaraCPF(input) {
   input.value = v;
 }
 
+let editandoFilmeId = null;
+
 function salvarFilme() {
   const titulo = document.getElementById('titulo').value.trim();
   const genero = document.getElementById('genero').value;
@@ -34,7 +36,15 @@ function salvarFilme() {
   }
 
   const filmes = JSON.parse(localStorage.getItem('filmes') || '[]');
-  filmes.push({ id: Date.now(), titulo, genero, descricao, classificacao, duracao, estreia });
+
+  if (editandoFilmeId) {
+    const idx = filmes.findIndex(f => f.id == editandoFilmeId);
+    if (idx !== -1) filmes[idx] = { id: editandoFilmeId, titulo, genero, descricao, classificacao, duracao, estreia };
+    editandoFilmeId = null;
+    document.getElementById('btnSalvarFilme').textContent = 'Salvar Filme';
+  } else {
+    filmes.push({ id: Date.now(), titulo, genero, descricao, classificacao, duracao, estreia });
+  }
 
   try {
     localStorage.setItem('filmes', JSON.stringify(filmes));
@@ -47,6 +57,27 @@ function salvarFilme() {
   }
 }
 
+function editarFilme(id) {
+  const filmes = JSON.parse(localStorage.getItem('filmes') || '[]');
+  const f = filmes.find(f => f.id == id);
+  if (!f) return;
+  document.getElementById('titulo').value = f.titulo;
+  document.getElementById('genero').value = f.genero;
+  document.getElementById('descricao').value = f.descricao || '';
+  document.getElementById('classificacao').value = f.classificacao;
+  document.getElementById('duracao').value = f.duracao;
+  document.getElementById('estreia').value = f.estreia;
+  editandoFilmeId = id;
+  document.getElementById('btnSalvarFilme').textContent = 'Atualizar Filme';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function excluirFilme(id) {
+  const filmes = JSON.parse(localStorage.getItem('filmes') || '[]').filter(f => f.id != id);
+  localStorage.setItem('filmes', JSON.stringify(filmes));
+  renderFilmes();
+}
+
 function renderFilmes() {
   const filmes = JSON.parse(localStorage.getItem('filmes') || '[]');
   const el = document.getElementById('listaFilmes');
@@ -57,7 +88,7 @@ function renderFilmes() {
   el.innerHTML = `
     <table class="table table-dark table-striped table-hover">
       <thead><tr>
-        <th>Título</th><th>Gênero</th><th>Classificação</th><th>Duração</th><th>Estreia</th>
+        <th>Título</th><th>Gênero</th><th>Classificação</th><th>Duração</th><th>Estreia</th><th></th>
       </tr></thead>
       <tbody>
         ${filmes.map(f => `
@@ -67,10 +98,16 @@ function renderFilmes() {
             <td>${f.classificacao}</td>
             <td>${f.duracao} min</td>
             <td>${f.estreia}</td>
+            <td class="text-nowrap">
+              <button class="btn btn-sm btn-outline-warning me-1" onclick="editarFilme(${f.id})">Editar</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="excluirFilme(${f.id})">Excluir</button>
+            </td>
           </tr>`).join('')}
       </tbody>
     </table>`;
 }
+
+let editandoSalaId = null;
 
 function salvarSala() {
   const nomeSala = document.getElementById('nomeSala').value.trim();
@@ -83,7 +120,15 @@ function salvarSala() {
   }
 
   const salas = JSON.parse(localStorage.getItem('salas') || '[]');
-  salas.push({ id: Date.now(), nomeSala, capacidade, tipo });
+
+  if (editandoSalaId) {
+    const idx = salas.findIndex(s => s.id == editandoSalaId);
+    if (idx !== -1) salas[idx] = { id: editandoSalaId, nomeSala, capacidade, tipo };
+    editandoSalaId = null;
+    document.getElementById('btnSalvarSala').textContent = 'Salvar Sala';
+  } else {
+    salas.push({ id: Date.now(), nomeSala, capacidade, tipo });
+  }
 
   try {
     localStorage.setItem('salas', JSON.stringify(salas));
@@ -93,6 +138,24 @@ function salvarSala() {
   } catch (e) {
     mostrarAlerta('Erro ao salvar: armazenamento cheio.', 'danger');
   }
+}
+
+function editarSala(id) {
+  const salas = JSON.parse(localStorage.getItem('salas') || '[]');
+  const s = salas.find(s => s.id == id);
+  if (!s) return;
+  document.getElementById('nomeSala').value = s.nomeSala;
+  document.getElementById('capacidade').value = s.capacidade;
+  document.getElementById('tipo').value = s.tipo;
+  editandoSalaId = id;
+  document.getElementById('btnSalvarSala').textContent = 'Atualizar Sala';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function excluirSala(id) {
+  const salas = JSON.parse(localStorage.getItem('salas') || '[]').filter(s => s.id != id);
+  localStorage.setItem('salas', JSON.stringify(salas));
+  renderSalas();
 }
 
 function renderSalas() {
@@ -105,7 +168,7 @@ function renderSalas() {
   el.innerHTML = `
     <table class="table table-dark table-striped table-hover">
       <thead><tr>
-        <th>Nome</th><th>Capacidade</th><th>Tipo</th>
+        <th>Nome</th><th>Capacidade</th><th>Tipo</th><th></th>
       </tr></thead>
       <tbody>
         ${salas.map(s => `
@@ -113,6 +176,10 @@ function renderSalas() {
             <td>${s.nomeSala}</td>
             <td>${s.capacidade}</td>
             <td>${s.tipo}</td>
+            <td class="text-nowrap">
+              <button class="btn btn-sm btn-outline-warning me-1" onclick="editarSala(${s.id})">Editar</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="excluirSala(${s.id})">Excluir</button>
+            </td>
           </tr>`).join('')}
       </tbody>
     </table>`;
@@ -140,6 +207,8 @@ function carregarSelectsSessao() {
   });
 }
 
+let editandoSessaoId = null;
+
 function salvarSessao() {
   const filmeId = document.getElementById('selectFilme').value;
   const salaId = document.getElementById('selectSala').value;
@@ -158,15 +227,16 @@ function salvarSessao() {
   const filme = filmes.find(f => f.id == filmeId);
   const sala = salas.find(s => s.id == salaId);
   const preco = parseFloat(precoRaw).toFixed(2);
-
   const sessoes = JSON.parse(localStorage.getItem('sessoes') || '[]');
-  sessoes.push({
-    id: Date.now(),
-    filmeId, salaId,
-    filmeTitulo: filme.titulo,
-    salaNome: sala.nomeSala,
-    dataHora, preco, idioma, formato
-  });
+
+  if (editandoSessaoId) {
+    const idx = sessoes.findIndex(s => s.id == editandoSessaoId);
+    if (idx !== -1) sessoes[idx] = { id: editandoSessaoId, filmeId, salaId, filmeTitulo: filme.titulo, salaNome: sala.nomeSala, dataHora, preco, idioma, formato };
+    editandoSessaoId = null;
+    document.getElementById('btnSalvarSessao').textContent = 'Salvar Sessão';
+  } else {
+    sessoes.push({ id: Date.now(), filmeId, salaId, filmeTitulo: filme.titulo, salaNome: sala.nomeSala, dataHora, preco, idioma, formato });
+  }
 
   try {
     localStorage.setItem('sessoes', JSON.stringify(sessoes));
@@ -179,6 +249,27 @@ function salvarSessao() {
   }
 }
 
+function editarSessao(id) {
+  const sessoes = JSON.parse(localStorage.getItem('sessoes') || '[]');
+  const s = sessoes.find(s => s.id == id);
+  if (!s) return;
+  document.getElementById('selectFilme').value = s.filmeId;
+  document.getElementById('selectSala').value = s.salaId;
+  document.getElementById('dataHora').value = s.dataHora;
+  document.getElementById('preco').value = s.preco;
+  document.getElementById('idioma').value = s.idioma;
+  document.getElementById('formato').value = s.formato;
+  editandoSessaoId = id;
+  document.getElementById('btnSalvarSessao').textContent = 'Atualizar Sessão';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function excluirSessao(id) {
+  const sessoes = JSON.parse(localStorage.getItem('sessoes') || '[]').filter(s => s.id != id);
+  localStorage.setItem('sessoes', JSON.stringify(sessoes));
+  renderSessoesCadastro();
+}
+
 function renderSessoesCadastro() {
   const sessoes = JSON.parse(localStorage.getItem('sessoes') || '[]');
   const el = document.getElementById('listaSessoes');
@@ -189,7 +280,7 @@ function renderSessoesCadastro() {
   el.innerHTML = `
     <table class="table table-dark table-striped table-hover">
       <thead><tr>
-        <th>Filme</th><th>Sala</th><th>Data e Hora</th><th>Preço</th><th>Idioma</th><th>Formato</th>
+        <th>Filme</th><th>Sala</th><th>Data e Hora</th><th>Preço</th><th>Idioma</th><th>Formato</th><th></th>
       </tr></thead>
       <tbody>
         ${sessoes.map(s => `
@@ -200,6 +291,10 @@ function renderSessoesCadastro() {
             <td>R$ ${parseFloat(s.preco).toFixed(2)}</td>
             <td>${s.idioma}</td>
             <td>${s.formato}</td>
+            <td class="text-nowrap">
+              <button class="btn btn-sm btn-outline-warning me-1" onclick="editarSessao(${s.id})">Editar</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="excluirSessao(${s.id})">Excluir</button>
+            </td>
           </tr>`).join('')}
       </tbody>
     </table>`;
